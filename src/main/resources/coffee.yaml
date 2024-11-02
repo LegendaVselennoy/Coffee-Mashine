@@ -1,0 +1,160 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /ingredients/{id}:
+    put:
+      tags:
+        - ingredient-controller
+      operationId: updateIngredient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Ingredient"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+  /drinks/{id}:
+    get:
+      tags:
+        - drink-controller
+      operationId: getDrinkById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Drink"
+    put:
+      tags:
+        - drink-controller
+      operationId: putDrink
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Drink"
+  /ingredients:
+    get:
+      tags:
+        - ingredient-controller
+      operationId: getAllDrinks
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ingredient"
+    post:
+      tags:
+        - ingredient-controller
+      operationId: createIngredient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Ingredient"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+  /drinks:
+    get:
+      tags:
+        - drink-controller
+      operationId: getAllDrinks_1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Drink"
+  /drinks/popular:
+    get:
+      tags:
+        - drink-controller
+      operationId: getDrinkPopular
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Drink"
+components:
+  schemas:
+    Ingredient:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+    Drink:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum:
+            - Expresso
+            - Americano
+            - Cappuccino
+        popular:
+          type: integer
+          format: int32
+        ingredients:
+          type: array
+          items:
+            $ref: "#/components/schemas/Ingredient"
+  
